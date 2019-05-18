@@ -1,0 +1,43 @@
+# How much nature that is left should be spared?/Do que ainda resta de natureza,
+#o quanto vocÃª acha que deveria ser conservado?
+
+# setwd
+setwd("C:\\Users\\iis\\Desktop\\Lucas\\estatisticas_aga\\tabelas")
+  # Brazil
+br = read.csv("C:/Users/iis/Desktop/Lucas/estatisticas_aga/tabelas/brazil/df_question_1_br.csv")
+pol = read.csv("poland/df_question_1_pol.csv")
+
+# Remove rows whose all values are 0 
+row_sub = apply(br, 1, function(row) all(row ==0))
+br = br[!row_sub,]
+# Transform df from factor to character
+br_in_character_form = data.frame(lapply(br,as.character), stringsAsFactors = FALSE)
+# Loop para ter data frame com uma variavel apenas ( Demorei pra conseguir Aff!)
+df = data.frame(ifelse(br_in_character_form[[1]] ==0, br_in_character_form[[2]], br_in_character_form[[1]]))
+df = data.frame(lapply(df,as.character), stringsAsFactors = FALSE)
+for (i in 3:6) {
+  print(i)
+  df = data.frame(ifelse(df[[1]] ==0, br_in_character_form[[i]], df[[1]])) # inclui coluna com possiveis valores 
+  df = data.frame(lapply(df,as.character), stringsAsFactors = FALSE) # converte para string
+  }
+
+# counts para cada pais
+br = df
+colnames(br) = "value"
+br = data.frame(as.factor(br$value))
+pol = data.frame(pol$value)
+#
+#Brazil
+tudo_br = nrow(subset(br,br$as.factor.br.value. == "Tudo (100%)"))
+A_maior_parte_br = nrow(subset(br,br$as.factor.br.value. == "A maior parte (75%)"))
+metade_br = nrow(subset(br,br$as.factor.br.value. == "Metade (50%)"))
+um_quarto_br = nrow(subset(br,br$as.factor.br.value. == "Um quarto (25%)")) 
+um_decimo_br =  nrow(subset(br,br$as.factor.br.value. == "Um dÃ©cimo (10%)"))
+
+# Pol
+
+tudo_pol = nrow(subset(pol,pol$pol.value == "Tudo (100%)"))
+A_maior_parte_pol = nrow(subset(pol,pol$pol.value == "A maior parte (75%)"))
+metade_pol = nrow(subset(pol,pol$pol.value == "Metade (50%)"))
+um_quarto_pol = nrow(subset(pol,pol$pol.value == "Um quarto (25%)")) 
+um_decimo_pol =  nrow(subset(pol,pol$pol.value == "Um dÃ©cimo (10%)"))
